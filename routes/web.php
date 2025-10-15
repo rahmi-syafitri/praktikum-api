@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboardcontroller;
+use App\Http\Controllers\FakultasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', [Dashboardcontroller::class, 'index'])->name('dashboard.index');
 
-Route::get('/', [Dashboardcontroller::class, 'index']);
-
-
+Route::get('/fakultas', [FakultasController::class, 'index'])->name('fakultas.index');
 
 
 

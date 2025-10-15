@@ -11,7 +11,7 @@ class Dashboardcontroller extends Controller
     
     public function index(){
 
-        $fakultas = Fakultas::first();
+        $fakultas = Fakultas::all();
 
         return view('welcome', compact('fakultas'));
     }
