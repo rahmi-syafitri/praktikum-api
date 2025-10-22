@@ -20,7 +20,7 @@ class FakultasController extends Controller
      */
     public function create()
     {
-        //
+        return view('fakultas.create');
     }
 
     /**
@@ -28,7 +28,16 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama_fakultas' => 'required|max:50',
+            'kode_fakultas' => 'required',
+        ]);
+        $fakultas = Fakultas::create( [
+            'nama_fakultas' => $request->nama_fakultas,
+            'kode_fakultas' => $request->kode_fakultas
+        ] );
+
+        return redirect()->route('fakultas.index');
     }
 
     /**

@@ -4,7 +4,7 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Daftar Fakultas</h1>
-                    <a href="" class="btn btn-primary mb-4">Tambah Fakultas</a>
+                    <a href="{{ route('fakultas.create') }}" class="btn btn-primary mb-4">Tambah Fakultas</a>
 
                     <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                         For more information about DataTables, please visit the <a target="_blank"
