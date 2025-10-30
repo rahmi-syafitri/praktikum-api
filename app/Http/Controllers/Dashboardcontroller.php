@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fakultas;
+use App\Models\prodi;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Return_;
 
-class Dashboardcontroller extends Controller
+class DashboardController extends Controller
 {
-    
-    public function index(){
+    public function index (){
 
-        $fakultas = Fakultas::all();
+        $fakultas = Fakultas::count();
+        $prodi = prodi::count();
 
-        return view('welcome', compact('fakultas'));
+        return view('welcome', compact('fakultas','prodi'));
     }
 }

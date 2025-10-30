@@ -15,3 +15,7 @@ php artisan make:migration create_prodis_table
 ```php
 php artisan migrate:fresh
 ```
+##push ke database
+git add .
+git commit -m "update"
+git push
