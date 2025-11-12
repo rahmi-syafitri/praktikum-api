@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\ProdiController;
+use App\Models\Fakultas;
+use App\Models\prodi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,14 +29,13 @@ Route::post('/fakultas/update/{id}', [FakultasController::class,'update'])->name
 Route::get('/fakultas/hapus/{id}', [FakultasController::class,'destroy'])->name('fakultas.hapus');
 
 
-//Prodi
-Route::get('/prodi', [ProdiController::class, 'index'])->name('prodi.index');
-Route::get('/prodi/create', [ProdiController::class, 'create'])->name('prodi.create');
-Route::post('/prodi/store', [ProdiController::class, 'store'])->name('prodi.store');
-Route::get('/prodi/edit/{id}', [prodiController::class,'edit'])->name('prodi.edit');
-Route::post('/prodi/update/{id}', [prodiController::class,'update'])->name('prodi.update');
-Route::get('/prodi/hapus/{id}', [prodiController::class,'destroy'])->name('prodi.hapus');
-
+//prodi
+Route::get('/prodi', [ProdiController::class,'index'])->name('prodi.index');
+Route::get('/prodi/create', [ProdiController::class,'create'])->name('prodi.create');
+Route::post('/prodi/store', [ProdiController::class,'store'])->name('prodi.store');
+Route::get('/prodi/edit/{id}', [ProdiController::class,'edit'])->name('prodi.edit');
+Route::post('/prodi/update/{id}', [ProdiController::class,'update'])->name('prodi.update');
+Route::get('/prodi/hapus/{id}', [ProdiController::class,'destroy'])->name('prodi.hapus');
 
 Route::get('/profil', function () {
     return view('profil');
@@ -42,3 +44,6 @@ Route::get('/profil', function () {
 Route::get('/data', function () {
     return view('data');
 });
+
+route::get('/register', [AuthController::class, 'formRegister'])->name('register');
+route::post('/pos-register', [AuthController::class, 'post'])->name('post');

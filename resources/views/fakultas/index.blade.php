@@ -21,15 +21,7 @@
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Nama Fakultas</th>
-                                            <th>Kode Fakultas</th>
-                                            <th>Aksi</th>
 
-                                        </tr>
-                                    </tfoot>
                                     <tbody>
 
                             @foreach ($fakultas as $item)

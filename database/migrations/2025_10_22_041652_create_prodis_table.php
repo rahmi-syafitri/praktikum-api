@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_prodi');
             $table->string('kode_prodi');
+            $table->foreignId('fakultas_id')->references('id')->on('fakultas')->onUpdate('cascade')->onDelete('casade');
             $table->timestamps();
         });
     }
