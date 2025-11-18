@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Fakultas;
+use App\Models\Dosen;
 use Illuminate\Http\Request;
 
 class DosenController extends Controller
@@ -12,7 +12,7 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $fakultas = Fakultas::all();
+        $dosen = dosen::all();
         return view('dosen.index', compact('dosens'));
     }
 
@@ -33,9 +33,9 @@ class DosenController extends Controller
             'nama_dosen' => 'required|max:50',
             'kode_dosen' => 'required',
         ]);
-        $fakultas = Fakultas::create([
-            'nama_dosen' => $request->nama_fakultas,
-            'kode_dosen' => $request->kode_fakultas,
+        $dosen = Dosen::create([
+            'nama_dosen' => $request->nama_dosen,
+            'kode_dosen' => $request->kode_dosen,
         ]);
 
         return redirect()->route('dosen.index');
@@ -54,8 +54,8 @@ class DosenController extends Controller
      */
     public function edit(string $id)
     {
-        $fakultas = Fakultas::find($id);
-        return view('fakultas.edit', compact('fakultas'));
+        $dosen = Dosen::find($id);
+        return view('dosen.edit', compact('dosen'));
     }
 
     /**
@@ -64,17 +64,17 @@ class DosenController extends Controller
     public function update(Request $request, string $id)
     {
         $validate = $request->validate([
-            'nama_fakultas' => 'required|max:50',
-            'kode_fakultas' => 'required',
+            'nama_dosen' => 'required|max:50',
+            'kode_dosen' => 'required',
         ]);
 
-        $fakultas = Fakultas::findOrFail($id);
-        $fakultas->update([
-            'nama_fakultas'=> $request->nama_fakultas,
-            'kode_fakultas'=> $request->kode_fakultas,
+        $dosen = Dosen::findOrFail($id);
+        $dosen->update([
+            'nama_dosen'=> $request->nama_dosen,
+            'kode_dosen'=> $request->kode_dosen,
         ]);
 
-        return redirect()->route('fakultas.index');
+        return redirect()->route('dosen.index');
     }
 
     /**
@@ -82,9 +82,9 @@ class DosenController extends Controller
      */
     public function destroy(string $id)
     {
-        $fakultas = Fakultas::findOrFail($id);
+        $dosen = Dosen::findOrFail($id);
 
-        $fakultas->delete();
-        return redirect()->route('fakultas.index');
+        $dosen->delete();
+        return redirect()->route('dosen.index');
     }
 }

@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dosen;
 use App\Models\Mahasiswa;
-use App\Models\Prodi;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
@@ -14,8 +12,8 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswas = Mahasiswa::with(['prodi', 'dosenPA'])->get();
-        return view('Mahasiswa.indexmahasiswa', compact('mahasiswas'));
+        $mahasiswa = Mahasiswa::all();
+        return view('mahasiswa.index', compact('mahasiswa'));
     }
 
     /**
@@ -23,9 +21,8 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        $prodis = Prodi::all();
-        $dosens = Dosen::all();
-        return view('Mahasiswa.createmahasiswa', compact('prodis', 'dosens'));
+        $mahasiswa = Mahasiswa::all();
+        return view('mahasiswa.create',compact('mahasiswa'));
     }
 
     /**
@@ -33,72 +30,66 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nim' => 'required|string|max:255|unique:mahasiswa',
-            'nama_mahasiswa' => 'required|string|max:255',
-            'angkatan' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'alamat' => 'required|string',
-            'email' => 'required|email|unique:mahasiswa',
-            'status_mahasiswa' => 'required|in:Aktif,Tidak Aktif,Cuti,Lulus',
-            'id_prodi' => 'required|exists:prodi,id',
-            'nidn_pa' => 'nullable|exists:dosen,nidn',
+        $validate = $request->validate([
+            'nama_mahasiswa' => 'required|max:50',
+            'nim' => 'required|unique:mahasiswas',
+            'prodi' => 'required'
+        ]);
+        $mahasiswa = Mahasiswa::create([
+            'nama_mahasiswa' => $request->nama_mahasiswa,
+            'nim' => $request->nim,
+            'prodi' =>$request->prodi
         ]);
 
-        Mahasiswa::create($request->only(['nim', 'nama_mahasiswa', 'angkatan', 'alamat', 'email', 'status_mahasiswa', 'id_prodi', 'nidn_pa']));
-
-        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa created successfully.');
+        return redirect()->route('mahasiswa.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $nim)
+    public function show(string $id)
     {
-        $mahasiswa = Mahasiswa::with(['prodi', 'dosenPA'])->findOrFail($nim);
-        return view('Mahasiswa.showmahasiswa', compact('mahasiswa'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $nim)
+    public function edit(string $id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($nim);
-        $prodis = Prodi::all();
-        $dosens = Dosen::all();
-        return view('Mahasiswa.editmahasiswa', compact('mahasiswa', 'prodis', 'dosens'));
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.edit', compact('mahasiswa'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $nim)
+    public function update(Request $request, string $id)
     {
-        $request->validate([
-            'nim' => 'required|string|max:255|unique:mahasiswa,nim,' . $nim . ',nim',
-            'nama_mahasiswa' => 'required|string|max:255',
-            'angkatan' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'alamat' => 'required|string',
-            'email' => 'required|email|unique:mahasiswa,email,' . $nim . ',nim',
-            'status_mahasiswa' => 'required|in:Aktif,Tidak Aktif,Cuti,Lulus',
-            'id_prodi' => 'required|exists:prodi,id',
-            'nidn_pa' => 'nullable|exists:dosen,nidn',
+        $validate = $request->validate([
+            'nama_mahasiswa' => 'required|max:50',
+            'nim' => 'required|unique:mahasiswas',
+            'prodi' => 'required',
         ]);
 
-        $mahasiswa = Mahasiswa::findOrFail($nim);
-        $mahasiswa->update($request->only(['nim', 'nama_mahasiswa', 'angkatan', 'alamat', 'email', 'status_mahasiswa', 'id_prodi', 'nidn_pa']));
+        $mahasiswa = mahasiswa::findOrFail($id);
+        $mahasiswa->update([
+            'nama_mahasiswa'=> $request->nama_mahasiswa,
+            'nim'=> $request->nim,
+            'prodi'=> $request->prodi,
+        ]);
 
-        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa updated successfully.');
+        return redirect()->route('mahasiswa.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $nim)
+    public function destroy(string $id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($nim);
-        $mahasiswa->delete();
+        $mahasiswa = Mahasiswa::findOrFail($id);
 
-        return redirect()->route('mahasiswa.index')->with('success', 'Mahasiswa deleted successfully.');
+        $mahasiswa->delete();
+        return redirect()->route('mahasiswa.index');
     }
 }

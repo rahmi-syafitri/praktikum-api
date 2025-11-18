@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Fakultas;
 use App\Models\prodi;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
+
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index (){
 
-        $fakultas = Fakultas::count();
-        $prodi = prodi::count();
+        $fakultas = Fakultas::first();
+        $prodi = prodi::first();
+        $mahasiswa = Mahasiswa::first();
+        $dosen = Dosen::first();
 
-        return view('welcome', compact('fakultas','prodi'));
+        return view('welcome', compact('fakultas','prodi','mahasiswa', 'dosen'));
     }
 }
